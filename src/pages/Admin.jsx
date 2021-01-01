@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import '../assets/GuestStyle.css'; // Assuming you want to use the same CSS
+import { Modal, notification } from 'antd';
+import '../assets/GuestStyle.css';
 import API_URLS from '../configs/config.js';
 
 const formatDate = (dateString) => {
@@ -19,6 +20,8 @@ const Admin = () => {
     const [pageNumber, setPageNumber] = useState(0);
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(0);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [adminToDelete, setAdminToDelete] = useState(null);
 
     const navigate = useNavigate();
 
@@ -61,14 +64,80 @@ const Admin = () => {
         fetchAdmins(searchQuery, pageNumber, pageSize);
     }, [searchQuery, pageNumber, pageSize]);
 
-    const handleEdit = (id) => {
-        console.log(`Edit admin with ID: ${id}`);
-        // Implement edit functionality
+    const handleEdit = async (id) => {
+        try {
+            setLoading(true);
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                setError('Silakan login kembali.');
+                return;
+            }
+
+            const response = await fetch(API_URLS.ADMIN_GET_BY_ID(id), {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (response.status === 401) {
+                navigate('/login');
+                return;
+            }
+
+            if (!response.ok) {
+                throw new Error('Terjadi kesalahan pada server, cobalah beberapa saat lagi');
+            }
+
+            const adminData = await response.json();
+            navigate(`/admin/admin/edit/${id}`, { state: { admin: adminData } });
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const handleDelete = (id) => {
-        console.log(`Delete admin with ID: ${id}`);
-        // Implement delete functionality
+    const showModal = (id) => {
+        setAdminToDelete(id);
+        setModalVisible(true);
+    };
+
+    const handleDelete = async () => {
+        setModalVisible(false);
+        try {
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                setError('Silakan login kembali.');
+                return;
+            }
+
+            const response = await fetch(API_URLS.DELETE_ADMIN(adminToDelete), {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (response.status === 401) {
+                navigate('/login');
+                return;
+            }
+
+            if (!response.ok) {
+                throw new Error('Terjadi kesalahan pada server, cobalah beberapa saat lagi');
+            }
+
+            setAdmins(prevAdmins => prevAdmins.filter(admin => admin.id !== adminToDelete));
+
+            notification.success({
+                message: 'Sukses!',
+                description: 'Data admin berhasil dihapus.',
+                placement: 'topRight',
+            });
+        } catch (error) {
+            setError(error.message);
+        }
     };
 
     if (loading) {
@@ -102,7 +171,7 @@ const Admin = () => {
             <div className="table-container">
                 <table>
                     <thead>
-                        <tr>
+                        <tr style={{textAlign: 'center'}}>
                             <th>No.</th>
                             <th>Username</th>
                             <th>Nama Lengkap</th>
@@ -129,7 +198,7 @@ const Admin = () => {
                                             <button onClick={() => handleEdit(admin.id)} className="edit-button">
                                                 <FaEdit />
                                             </button>
-                                            <button onClick={() => handleDelete(admin.id)} className="delete-button">
+                                            <button onClick={() => showModal(admin.id)} className="delete-button">
                                                 <FaTrash />
                                             </button>
                                         </div>
@@ -167,6 +236,16 @@ const Admin = () => {
                     </div>
                 </div>
             )}
+            <Modal
+                title="Konfirmasi Hapus"
+                visible={modalVisible}
+                onOk={handleDelete}
+                onCancel={() => setModalVisible(false)}
+                okText="Hapus"
+                cancelText="Batal"
+            >
+                <p>Apakah Anda yakin ingin menghapus data ini?</p>
+            </Modal>
         </div>
     );
 };

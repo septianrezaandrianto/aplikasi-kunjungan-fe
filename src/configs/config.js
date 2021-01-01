@@ -11,6 +11,8 @@ const API_URLS = {
     GET_GUEST_LIST: (page, size, query) => `${BASE_URL}/guest/getPage?pageNumber=${page}&pageSize=${size}&filter=${query}`,
     GET_ADMIN_LIST: (page, size, query) => `${BASE_URL}/admin/getPage?pageNumber=${page}&pageSize=${size}&filter=${query}`,
     DOWNLOAD_REPORT : (formattedDate, status) => `${BASE_URL}/guest/generateXlsxReport/${formattedDate}/${status}`,
+    DELETE_ADMIN : (adminId) => `${BASE_URL}/admin/deleteAdmin/${adminId}`,
+    ADMIN_GET_BY_ID: (adminId) => `${BASE_URL}/admin/getById/${adminId}`,
 };
 
 export default API_URLS;

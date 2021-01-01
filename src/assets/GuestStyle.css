@@ -433,3 +433,39 @@ img {
     padding: 20px;
     z-index: 1000;
 }
+
+/* Existing styles */
+
+/* Existing styles */
+
+/* Style for the action buttons container */
+.action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Adjust the gap as needed */
+}
+
+/* Style for individual buttons */
+.action-buttons button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10px; /* Increase padding for larger size */
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em; /* Increase font size */
+    width: 40px; /* Set a width */
+    height: 40px; /* Set a height */
+}
+
+.action-buttons button.edit-button {
+    color: #007bff; /* Edit button color */
+}
+
+.action-buttons button.delete-button {
+    color: #dc3545; /* Delete button color */
+}
+
