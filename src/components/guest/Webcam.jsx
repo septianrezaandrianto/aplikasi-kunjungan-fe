@@ -1,10 +1,8 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import Webcam from "react-webcam";
 import { PoweroffOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
-import '../assets/WebcamStyle.css'; // Import the CSS file
-
-const WebcamComponent = () => <Webcam />;
+import '../../assets/WebcamStyle.css'; // Import the CSS file
 
 const videoConstraints = {
     width: 400,
@@ -12,16 +10,21 @@ const videoConstraints = {
     facingMode: "user"
 };
 
-export const WebcamCapture = () => {
-
+export const WebcamCapture = ({ onCapture, reset }) => {
     const [image, setImage] = useState('');
     const webcamRef = useRef(null);
 
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();
         setImage(imageSrc);
-        console.log("Base64 Image: ", imageSrc); // Log the base64 value
-    }, [webcamRef, setImage]);
+        onCapture(imageSrc); // Call the onCapture callback with the image
+    }, [webcamRef, onCapture]);
+
+    useEffect(() => {
+        if (reset) {
+            setImage('');
+        }
+    }, [reset]);
 
     return (
         <div className="webcam-container">
@@ -41,7 +44,7 @@ export const WebcamCapture = () => {
             </div>
             <div>
                 {image !== '' ? (
-                    <Button
+                    <Button style={{ width: '275%', marginLeft: '-88%' }}
                         className="webcam-button"
                         type="primary" danger
                         icon={<PoweroffOutlined />}
@@ -53,7 +56,7 @@ export const WebcamCapture = () => {
                         Retake Image
                     </Button>
                 ) : (
-                    <Button
+                    <Button style={{ width: '350%', marginLeft: '-130%' }}
                         className="webcam-button"
                         type="primary" danger
                         icon={<PoweroffOutlined />}
