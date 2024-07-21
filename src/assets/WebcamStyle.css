@@ -1,0 +1,43 @@
+.webcam-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* margin: 20px; */
+}
+
+.webcam-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.webcam-img img {
+    max-width: 100%;
+    height: auto;
+}
+
+.webcam-button {
+    width: 100%;
+    max-width: 400px;
+    margin: -10px 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .webcam-container {
+        margin: 10px;
+    }
+
+    .webcam-img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .webcam-button {
+        max-width: 100%;
+    }
+}
