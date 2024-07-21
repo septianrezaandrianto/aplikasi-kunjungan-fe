@@ -151,7 +151,7 @@ const Home = () => {
               label="Nomor Antrian"
               name="runningNumber"
             >
-              <div style={{ fontSize: '48px', fontFamily: 'cursive' }}>{runningNumber}</div>
+              <div style={{ fontSize: '40px', fontFamily: 'cursive' }}>{runningNumber}</div>
             </Form.Item>
           </Col>
           <Col span={24} md={12}>
