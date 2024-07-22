@@ -168,6 +168,7 @@ const Guest = () => {
                             <th>Kantor</th> {/* New column */}
                             <th>No. Identitas</th> {/* New column */}
                             <th>Nama Yang Di Tuju</th> {/* New column */}
+                            <th>Keperluan Kunjungan</th>
                             <th>Foto</th>
                             <th>Aksi</th> {/* New column for actions */}
                         </tr>
@@ -188,6 +189,7 @@ const Guest = () => {
                                     <td>{guest.officeName}</td> {/* Display office name */}
                                     <td>{guest.identitasNumber}</td> {/* Display identitas number */}
                                     <td>{guest.admin.fullName}</td> {/* Display admin name */}
+                                    <td>{guest.note}</td>
                                     <td>
                                         {guest.image ? (
                                             <img
