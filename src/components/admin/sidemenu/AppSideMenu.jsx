@@ -1,44 +1,45 @@
 import { Menu } from "antd";
-import { AppstoreOutlined } from '@ant-design/icons';
+import { DashboardOutlined, TeamOutlined, UnorderedListOutlined, FileTextOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
 
 const AppSideMenu = () => {
+    const navigate = useNavigate();
 
     const handleMenuClick = (item) => {
         navigate(item.key);
     };
-    const navigate = useNavigate()
+
     return (
-        <div className="AppSideMenu" style={{height: '100%'}}>
-            <Menu 
+        <div className="AppSideMenu" style={{ height: '100%', width: '256px', background: '#fff' }}>
+            <Menu
                 className="SideMenuVertical"
-                mode= "vertical"
+                mode="inline"
                 onClick={handleMenuClick}
                 items={[
                     {
                         label: "Dashboard",
-                        icon: <AppstoreOutlined/>,
+                        icon: <DashboardOutlined />,
                         key: "/admin"
-                    }, 
+                    },
                     {
                         label: "Admin",
-                        icon: <AppstoreOutlined/>,
+                        icon: <TeamOutlined />,
                         key: "/admin/admin"
-                    }, 
+                    },
                     {
                         label: "Daftar Tamu",
-                        icon: <AppstoreOutlined/>,
+                        icon: <UnorderedListOutlined />,
                         key: "/admin/guest"
-                    }, 
+                    },
                     {
                         label: "Laporan",
-                        icon: <AppstoreOutlined/>,
+                        icon: <FileTextOutlined />,
                         key: "/admin/report"
                     }
-                ]}>    
-            </Menu>
+                ]}
+            />
         </div>
-    )
+    );
 };
 
 export default AppSideMenu;

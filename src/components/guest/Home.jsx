@@ -99,30 +99,55 @@ const Home = () => {
         note: values.note
       };
       console.log('payload:', payload);
+  
       const response = await axios.post('http://localhost:8091/guest/createGuest', payload);
-      message.success('Daftar kunjungan berhasil dibuat');
-      console.log('Response:', response.data);
-      form.resetFields();
-      setSelectedName('Pilih nama yang dituju'); // Reset the selected name
-      setFormData({
-        visitorIdNumber: '',
-        identitasNumber: '',
-        phoneNumber: '',
-        fullName: '',
-        officeName: '',
-        email: '',
-        visitDateStart: '',
-        visitDateEnd: '',
-        note: '',
-        adminId: '',
-        runningNumber: '',
-        image: ''
-      });
-      setResetWebcam(true); // Trigger webcam reset
+  
+      if (response.status === 200) {
+        message.success('Daftar kunjungan berhasil dibuat');
+        console.log('Response:', response.data);
+        form.resetFields();
+        setSelectedName('Pilih nama yang dituju'); // Reset the selected name
+        setFormData({
+          visitorIdNumber: '',
+          identitasNumber: '',
+          phoneNumber: '',
+          fullName: '',
+          officeName: '',
+          email: '',
+          visitDateStart: '',
+          visitDateEnd: '',
+          note: '',
+          adminId: '',
+          runningNumber: '',
+          image: ''
+        });
+        setResetWebcam(true); // Trigger webcam reset
+    
+      } else {
+        message.error(`Failed to create guest: ${response.data.errorList}`);
+      }
     } catch (error) {
-      message.error('Failed to create guest');
-      console.error('Error:', error);
+      if (error.response) {
+        // Server responded with a status other than 200 range
+        message.error(`${error.response.data.errorList}`);
+        console.error('Error:', error.response);
+      } else if (error.request) {
+        // Request was made but no response was received
+        message.error('Gagal konek ke server');
+        console.error('Error:', error.request);
+      } else {
+        // Something happened in setting up the request that triggered an error
+        message.error(`${error.response.data.errorList}`);
+        console.error('Error:', error.response.data.errorList);
+      }
     }
+  };
+  
+  const incrementRunningNumber = (number) => {
+    const prefix = number.slice(0, 11); // Adjust according to your format
+    const numericPart = parseInt(number.slice(11), 10);
+    const incrementedNumber = numericPart + 1;
+    return `${prefix}${String(incrementedNumber).padStart(7, '0')}`;
   };
 
   useEffect(() => {
