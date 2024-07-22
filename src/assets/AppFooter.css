@@ -1,0 +1,10 @@
+/* AppFooter.css */
+
+.AppFooter {
+    padding: 10px;
+    background-color: #f1f1f1;
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+    border-top: 1px solid #ddd;
+}

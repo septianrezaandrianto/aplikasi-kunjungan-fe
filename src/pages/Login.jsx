@@ -13,7 +13,9 @@ const Login = () => {
       const response = await axios.post('http://localhost:8091/admin/login', values);
 
       if (response.status === 200) {
-        localStorage.setItem('authToken', response.data.token); // Simpan token ke localStorage
+        localStorage.setItem('authToken', response.data.data.accessToken); // Simpan token ke localStorage
+        console.log('authToken', response.data)
+        console.log('authToken', localStorage.getItem('authToken'))
         message.success('Login successful');
         navigate('/admin'); // Redirect ke /admin
       } else {

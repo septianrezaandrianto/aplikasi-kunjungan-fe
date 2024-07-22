@@ -1,0 +1,435 @@
+/* GuestStyle.css */
+
+.dashboardPage {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+}
+
+.search-container {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-container input {
+    padding: 12px 20px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-container input:focus {
+    border-color: #1890ff;
+    box-shadow: 0 0 8px rgba(24, 144, 255, 0.2);
+}
+
+.page-size-container {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-size-container label {
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.page-size-container select {
+    padding: 12px 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.page-size-container select:focus {
+    border-color: #1890ff;
+    box-shadow: 0 0 8px rgba(24, 144, 255, 0.2);
+}
+
+.table-container {
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 400px; /* Adjust this value as needed */
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f4f4f4;
+    color: #333;
+    font-weight: bold;
+}
+
+td {
+    background-color: #fff;
+}
+
+tr:nth-child(even) td {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+img {
+    max-width: 75px;
+    height: auto;
+    border-radius: 4px;
+}
+
+.error-message {
+    color: #ff4d4f;
+    margin-top: 20px;
+}
+
+.loading-message {
+    color: #1890ff;
+    margin-top: 20px;
+}
+
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination button {
+    padding: 10px 20px;
+    margin: 0 5px;
+    border: none;
+    background-color: #1890ff;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+    background-color: #40a9ff;
+}
+
+.pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.pagination span {
+    margin: 0 10px;
+    line-height: 32px;
+    font-size: 16px;
+}
+
+.table-container button {
+    margin-right: 5px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.table-container button:first-of-type {
+    background-color: #52c41a; /* Green for Approve */
+}
+
+.table-container button:first-of-type:hover {
+    background-color: #73d13d;
+}
+
+.table-container button:last-of-type {
+    background-color: #ff4d4f; /* Red for Reject */
+}
+
+.table-container button:last-of-type:hover {
+    background-color: #ff7875;
+}
+
+.table-container button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 5px;
+    margin: 0 5px;
+}
+
+.table-container button:hover {
+    background-color: #f0f0f0;
+    border-radius: 4px;
+}
+
+.table-container button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 5px;
+    margin: 0 5px;
+}
+
+.table-container button:hover {
+    background-color: #f0f0f0;
+    border-radius: 4px;
+}
+
+/* New styles for action buttons */
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.action-buttons button {
+    margin: 0;
+}
+
+/* New styles for error popup */
+.error-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.error-message {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+}
+
+.error-message button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border: none;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.error-message button:hover {
+    background: #0056b3;
+}
+
+/* New styles for error popup */
+.error-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4); /* Darker background with less opacity */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.error-message {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px; /* Rounded corners */
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    animation: scaleIn 0.3s ease-out;
+}
+
+.error-message p {
+    font-size: 18px;
+    color: #ff4d4f; /* Red color for error text */
+    margin: 0 0 20px;
+}
+
+.error-message button {
+    padding: 10px 20px;
+    border: none;
+    background: #007bff;
+    color: white;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.error-message button:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Keyframes for animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.9);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+/* Styles for confirmation and success modals */
+
+.confirm-popup, .success-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.confirm-message, .success-message {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.confirm-message button, .success-message button {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.confirm-message button:hover, .success-message button:hover {
+    background-color: #0056b3;
+}
+
+.error-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.error-message {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.error-message button {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #dc3545;
+    color: white;
+    cursor: pointer;
+}
+
+.error-message button:hover {
+    background-color: #c82333;
+}
+
+.table-container {
+    max-height: 400px; /* Set a fixed height for the table container */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #ddd; /* Optional: Add border for better visibility */
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse; /* Ensures borders are merged */
+}
+
+.table-container thead {
+    position: sticky;
+    top: 0; /* Fix the header to the top of the table container */
+    background-color: #f4f4f4; /* Optional: Set a background color for the header */
+    z-index: 1; /* Ensure the header stays above the table body */
+}
+
+.table-container th, .table-container td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Add a border between rows */
+}
+
+.table-container th {
+    background-color: #f4f4f4; /* Optional: Match the header background color */
+    font-weight: bold; /* Optional: Make header text bold */
+}
+
+.table-container tr:nth-child(even) {
+    background-color: #f9f9f9; /* Optional: Zebra striping */
+}
+
+.loading-message, .error-popup, .confirm-popup, .success-popup {
+    /* Styles for loading, error, confirmation, and success popups */
+}
+
+/* Additional styles for modals and popups */
+.error-popup, .confirm-popup, .success-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    z-index: 1000;
+}

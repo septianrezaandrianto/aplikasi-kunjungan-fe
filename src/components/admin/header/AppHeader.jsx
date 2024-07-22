@@ -2,6 +2,7 @@ import React from 'react';
 import { Badge, Image, Space, Typography } from "antd";
 import { BellFilled, MailOutlined, MenuOutlined, PoweroffOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import logo from '../../../assets/img/logo.jpeg';
 
 const AppHeader = ({ onToggleSidebar }) => {
     const navigate = useNavigate();
@@ -18,10 +19,12 @@ const AppHeader = ({ onToggleSidebar }) => {
                     style={{ fontSize: '24px', cursor: 'pointer' }}
                     onClick={onToggleSidebar} // Pass function to toggle sidebar
                 />
-                <Image width={40} src="https://www.iconfinder.com/icons/7123025/logo_google_g_icon" />
-                <Typography.Title level={3} style={{ margin: 0 }}>
-                    Admin Dashboard
-                </Typography.Title>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Image width={240} src={logo} />
+                    <Typography.Title level={3} style={{ margin: 0, marginLeft: '10px' }}>
+                        Admin Page
+                    </Typography.Title>
+                </div>
             </Space>
             <Space>
                 <PoweroffOutlined
