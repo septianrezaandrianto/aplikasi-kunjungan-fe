@@ -22,18 +22,22 @@
     border-top: 1px solid rgb(0, 0, 0, 0.15);
 }
 
-.AppSideMenu {
+.SideMenuAndPageContent {
     display: flex;
     flex: 1;
     justify-content: flex-start;
     align-items: flex-start;
+    background-color: rgba(0, 0, 0, 0.05) ;
+}
+
+.AppSideMenu {
+    height: 100%;
+}
+
+.SideMenuVertical {
+    height: 100%;
 }
 
 .AppPageContent {
-
+    padding-left: 12px;
 }
-
-.AppRoute {
-    
-}
-

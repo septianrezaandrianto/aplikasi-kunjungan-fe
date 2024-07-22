@@ -10,7 +10,7 @@ function AppAdmin() {
     return (
         <div className="AppAdmin">
             <AppHeader/>
-            <Space>
+            <Space className="SideMenuAndPageContent">
                 <AppSideMenu/>
                 <AppPageContent/>
             </Space>

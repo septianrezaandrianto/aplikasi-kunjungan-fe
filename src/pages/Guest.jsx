@@ -1,6 +1,6 @@
 const Guest = () => {
     return (
-        <div className="guestPage">Guest</div>
+        <div className="dashboardPage">Guest</div>
     )
 }
 
