@@ -77,7 +77,7 @@ const Login = () => {
             <Button type="primary" htmlType="submit" className="login-form-button">
               Log in
             </Button>
-            <a href="/register">register now!</a>
+            <a href="/register">Daftar Sekarang!</a>
           </Form.Item>
         </Form>
       </Card>
