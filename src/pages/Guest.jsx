@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FaCheck, FaTimes } from 'react-icons/fa'; // Importing icons
 import { useNavigate } from 'react-router-dom'; // Import for redirection
 import '../assets/GuestStyle.css';
+import API_URLS from '../configs/config.js';
 
 const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -16,13 +17,13 @@ const Guest = () => {
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [pageNumber, setPageNumber] = useState(0);
-    const [pageSize, setPageSize] = useState(10); // State for page size
-    const [totalPages, setTotalPages] = useState(0); // State for total number of pages
-    const [showConfirmModal, setShowConfirmModal] = useState(false); // State for confirmation modal
-    const [actionType, setActionType] = useState(''); // Action type for the modal (approve/reject)
-    const [selectedGuestId, setSelectedGuestId] = useState(null); // State for selected guest ID
-    const [showSuccessPopup, setShowSuccessPopup] = useState(false); // State for success popup
-    const [showSessionExpiredModal, setShowSessionExpiredModal] = useState(false); // State for session expired modal
+    const [pageSize, setPageSize] = useState(10); 
+    const [totalPages, setTotalPages] = useState(0); 
+    const [showConfirmModal, setShowConfirmModal] = useState(false); 
+    const [actionType, setActionType] = useState(''); 
+    const [selectedGuestId, setSelectedGuestId] = useState(null); 
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false); 
+    const [showSessionExpiredModal, setShowSessionExpiredModal] = useState(false); 
 
     const navigate = useNavigate(); // Hook for navigation
 
@@ -33,8 +34,9 @@ const Guest = () => {
                 setError('Silakan login kembali.');
                 return;
             }
-
-            const response = await fetch(`http://localhost:8091/guest/getPage?pageNumber=${page}&pageSize=${size}&filter=${query}`, {
+            
+            const url = API_URLS.GET_GUEST_LIST(page, size, query);
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -75,7 +77,8 @@ const Guest = () => {
                 return;
             }
 
-            const actionUrl = `http://localhost:8091/guest/doAction/${selectedGuestId}/${actionType}`;
+            // const actionUrl = `http://localhost:8091/guest/doAction/${selectedGuestId}/${actionType}`;
+            const actionUrl = DO_ACTION(selectedGuestId,actionType);
             const response = await fetch(actionUrl, {
                 method: 'GET',
                 headers: {

@@ -68,6 +68,35 @@
     overflow: hidden; /* Prevent scroll within content */
 }
 
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f2f5;
+    position: fixed;
+    width: 99%;
+    margin: 0px;
+}
+  
+  .login-card {
+    padding: 20px;
+    width: 100%;
+    max-width: 350px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .login-card .ant-form-item {
+    margin-bottom: 12px;
+  }
+  
+  .login-card .login-form-button {
+    width: 100%;
+  }
+
+  
+
 @media (max-width: 768px) {
     .AppSideMenu {
         width: 60px; /* Adjust for mobile view */

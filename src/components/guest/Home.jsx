@@ -3,6 +3,8 @@ import axios from 'axios';
 import { WebcamCapture } from './Webcam';
 import { DownOutlined } from '@ant-design/icons';
 import { Form, Input, Col, Row, Dropdown, Space, DatePicker, Button, Menu, message } from 'antd';
+import logo from '../../assets/img/logo.jpeg'; // Import the logo image
+import API_URLS from '../../configs/config.js';
 
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
@@ -32,7 +34,7 @@ const Home = () => {
   useEffect(() => {
     const fetchRunningNumber = async () => {
       try {
-        const response = await axios.get('http://localhost:8091/queueNumber/getRunningNumber');
+        const response = await axios.get(API_URLS.RUNNING_NUMBER);
         setRunningNumber(response.data.data); // Adjust based on your response structure
         setFormData(prevData => ({ ...prevData, runningNumber: response.data.data }));
       } catch (error) {
@@ -46,7 +48,7 @@ const Home = () => {
   useEffect(() => {
     const fetchAdminList = async () => {
       try {
-        const response = await axios.get('http://localhost:8091/admin/getAdminList');
+        const response = await axios.get(API_URLS.ADMIN_LIST);
         setAdmins(response.data.data); // Adjust based on your response structure
       } catch (error) {
         message.error('Failed to fetch admin list');
@@ -99,9 +101,9 @@ const Home = () => {
         note: values.note
       };
       console.log('payload:', payload);
-  
-      const response = await axios.post('http://localhost:8091/guest/createGuest', payload);
-  
+
+      const response = await axios.post(API_URLS.CREATE_GUEST, payload);
+
       if (response.status === 200) {
         message.success('Daftar kunjungan berhasil dibuat');
         console.log('Response:', response.data);
@@ -122,7 +124,9 @@ const Home = () => {
           image: ''
         });
         setResetWebcam(true); // Trigger webcam reset
-    
+
+        // Refresh the page
+        window.location.reload();
       } else {
         message.error(`Failed to create guest: ${response.data.errorList}`);
       }
@@ -142,7 +146,7 @@ const Home = () => {
       }
     }
   };
-  
+
   const incrementRunningNumber = (number) => {
     const prefix = number.slice(0, 11); // Adjust according to your format
     const numericPart = parseInt(number.slice(11), 10);
@@ -158,7 +162,9 @@ const Home = () => {
 
   return (
     <>
-      <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Guest Apps</h1>
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+        <img src={logo} alt="Logo" style={{ maxWidth: '250px' }} />
+      </div>
       <Form
         form={form}
         name="basic"
