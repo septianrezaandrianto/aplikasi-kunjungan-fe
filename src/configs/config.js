@@ -10,6 +10,7 @@ const API_URLS = {
     DO_ACTION : (selectedGuestId,actionType) => `${BASE_URL}/guest/doAction/${selectedGuestId}/${actionType}`,
     GET_GUEST_LIST: (page, size, query) => `${BASE_URL}/guest/getPage?pageNumber=${page}&pageSize=${size}&filter=${query}`,
     GET_ADMIN_LIST: (page, size, query) => `${BASE_URL}/admin/getPage?pageNumber=${page}&pageSize=${size}&filter=${query}`,
+    DOWNLOAD_REPORT : (formattedDate, status) => `${BASE_URL}/guest/generateXlsxReport/${formattedDate}/${status}`,
 };
 
 export default API_URLS;
