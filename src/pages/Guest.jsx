@@ -78,7 +78,7 @@ const Guest = () => {
             }
 
             // const actionUrl = `http://localhost:8091/guest/doAction/${selectedGuestId}/${actionType}`;
-            const actionUrl = DO_ACTION(selectedGuestId,actionType);
+            const actionUrl = API_URLS.DO_ACTION(selectedGuestId,actionType);
             const response = await fetch(actionUrl, {
                 method: 'GET',
                 headers: {
