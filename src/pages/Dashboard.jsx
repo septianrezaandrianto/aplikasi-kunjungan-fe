@@ -21,11 +21,10 @@ const Dashboard = () => {
                 const approvedResponse = await axios.get(API_URLS.TOTAL_GUEST(date, 'APPROVE'));
                 const waitingResponse = await axios.get(API_URLS.TOTAL_GUEST(date, 'WAITING FOR APPROVAL'));
                 const rejectedResponse = await axios.get(API_URLS.TOTAL_GUEST(date, 'REJECT'));
-
                 setData({
-                    approved: approvedResponse.data.total || 0,
-                    waiting: waitingResponse.data.total || 0,
-                    rejected: rejectedResponse.data.total || 0
+                    approved: approvedResponse.data.data || 0,
+                    waiting: waitingResponse.data.data || 0,
+                    rejected: rejectedResponse.data.data || 0
                 });
                 setLoading(false);
             } catch (err) {
