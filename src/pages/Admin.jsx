@@ -47,7 +47,8 @@ const Admin = () => {
             }
 
             if (!response.ok) {
-                throw new Error('Terjadi kesalahan pada server, cobalah beberapa saat lagi');
+                const errorData = await response.json();
+                throw new Error(errorData.errorList);
             }
 
             const data = await response.json();
@@ -86,11 +87,12 @@ const Admin = () => {
             }
 
             if (!response.ok) {
-                throw new Error('Terjadi kesalahan pada server, cobalah beberapa saat lagi');
+                const errorData = await response.json();
+                throw new Error(errorData.errorList);
             }
 
             const adminData = await response.json();
-            navigate(`/admin/admin/edit/${id}`, { state: { admin: adminData } });
+            navigate(`/admin/admin/edit/${id}`, { state: { admin: adminData.data } });
         } catch (error) {
             setError(error.message);
         } finally {
@@ -125,7 +127,8 @@ const Admin = () => {
             }
 
             if (!response.ok) {
-                throw new Error('Terjadi kesalahan pada server, cobalah beberapa saat lagi');
+                const errorData = await response.json();
+                throw new Error(errorData.errorList);
             }
 
             setAdmins(prevAdmins => prevAdmins.filter(admin => admin.id !== adminToDelete));

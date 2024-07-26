@@ -13,6 +13,8 @@ const API_URLS = {
     DOWNLOAD_REPORT : (formattedDate, status) => `${BASE_URL}/guest/generateXlsxReport/${formattedDate}/${status}`,
     DELETE_ADMIN : (adminId) => `${BASE_URL}/admin/deleteAdmin/${adminId}`,
     ADMIN_GET_BY_ID: (adminId) => `${BASE_URL}/admin/getById/${adminId}`,
+    UPDATE_ADMIN:(adminId) => `${BASE_URL}/admin/updateAdmin/${adminId}`,
+
 };
 
 export default API_URLS;

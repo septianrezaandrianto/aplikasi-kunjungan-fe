@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { notification } from 'antd';
-import '../assets/AdminStyle.css';
+import { notification, Form, Input, Button, Select, Spin, Typography, Divider } from 'antd';
+import '../assets/AdminStyle.css'; // Ensure this file includes the necessary styles
+import API_URLS from '../configs/config.js';
+
+const { Option } = Select;
+const { Title } = Typography;
 
 const AdminEdit = () => {
     const location = useLocation();
@@ -12,7 +16,6 @@ const AdminEdit = () => {
     
     // Check if `admin` is available
     if (!admin) {
-        console.log('admin', admin)
         notification.error({ message: 'Admin data not found.' });
         navigate('/admin');
         return null;
@@ -27,12 +30,12 @@ const AdminEdit = () => {
     });
     const [loading, setLoading] = useState(false);
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+    const handleChange = (changedValues) => {
+        setFormData(prevData => ({ ...prevData, ...changedValues }));
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async (values) => {
+        setLoading(true);
         try {
             const token = localStorage.getItem('authToken');
             if (!token) {
@@ -41,13 +44,13 @@ const AdminEdit = () => {
                 return;
             }
 
-            const response = await fetch(`http://localhost:8091/admin/update/${admin.id}`, {
+            const response = await fetch(API_URLS.UPDATE_ADMIN(admin.id), {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(values)
             });
 
             if (response.status === 401) {
@@ -56,7 +59,8 @@ const AdminEdit = () => {
             }
 
             if (!response.ok) {
-                throw new Error('Terjadi kesalahan pada server, cobalah beberapa saat lagi');
+                const errorData = await response.json();
+                throw new Error(errorData.errorList);
             }
 
             notification.success({
@@ -65,75 +69,90 @@ const AdminEdit = () => {
                 placement: 'topRight',
             });
 
-            navigate('/admin');
+            navigate('/admin/admin');
         } catch (error) {
             notification.error({ message: 'Error', description: error.message });
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <div className="admin-edit-page">
-            <h1>Edit Admin</h1>
-            <form onSubmit={handleSubmit} className="admin-edit-form">
-                <div className="form-group">
-                    <label htmlFor="username">Username:</label>
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        value={formData.username}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="fullName">Nama Lengkap:</label>
-                    <input
-                        type="text"
-                        id="fullName"
-                        name="fullName"
-                        value={formData.fullName}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="phoneNumber">No HP:</label>
-                    <input
-                        type="text"
-                        id="phoneNumber"
-                        name="phoneNumber"
-                        value={formData.phoneNumber}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="address">Alamat:</label>
-                    <input
-                        type="text"
-                        id="address"
-                        name="address"
-                        value={formData.address}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="role">Role:</label>
-                    <select
-                        id="role"
-                        name="role"
-                        value={formData.role}
-                        onChange={handleChange}
-                        required
+            <div className="admin-edit-container">
+                <Title level={2}>Edit Admin</Title>
+                <Divider />
+                
+                <Spin spinning={loading} tip="Menyimpan...">
+                    <Form
+                        initialValues={formData}
+                        onFinish={handleSubmit}
+                        layout="vertical"
+                        className="admin-edit-form"
                     >
-                        <option value="ADMIN">Admin</option>
-                        <option value="USER">User</option>
-                    </select>
-                </div>
-                <button type="submit">Simpan Perubahan</button>
-            </form>
+                        <Form.Item
+                            label="Username"
+                            name="username"
+                            rules={[{ required: true, message: 'Username is required' }]}
+                        >
+                            <Input disabled />
+                        </Form.Item>
+                        
+                        <Form.Item
+                            label="Nama Lengkap"
+                            name="fullName"
+                            rules={[{ required: true, message: 'Nama Lengkap is required' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        
+                        <Form.Item
+                            label="No HP"
+                            name="phoneNumber"
+                            rules={[{ required: true, message: 'No HP is required' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        
+                        <Form.Item
+                            label="Alamat"
+                            name="address"
+                            rules={[{ required: true, message: 'Alamat is required' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        
+                        <Form.Item
+                            label="Role"
+                            name="role"
+                            rules={[{ required: true, message: 'Role is required' }]}
+                        >
+                            <Select>
+                                <Option value="ADMIN">ADMIN</Option>
+                                <Option value="RECEPTIONIST">RECEPTIONIST</Option>
+                            </Select>
+                        </Form.Item>
+                        
+                        <Form.Item>
+                            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
+                                <Button 
+                                    type="primary" 
+                                    htmlType="submit" 
+                                    loading={loading}
+                                >
+                                    Simpan
+                                </Button>
+                                <Button 
+                                    type="default" 
+                                    onClick={() => navigate('/admin/admin')}
+                                >
+                                    Kembali
+                                </Button>
+                            </div>
+                        </Form.Item>
+                    </Form>
+                </Spin>
+            </div>
         </div>
     );
 };
