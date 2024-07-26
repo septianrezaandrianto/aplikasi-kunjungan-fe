@@ -14,6 +14,7 @@ const API_URLS = {
     DELETE_ADMIN : (adminId) => `${BASE_URL}/admin/deleteAdmin/${adminId}`,
     ADMIN_GET_BY_ID: (adminId) => `${BASE_URL}/admin/getById/${adminId}`,
     UPDATE_ADMIN:(adminId) => `${BASE_URL}/admin/updateAdmin/${adminId}`,
+    TOTAL_GUEST:(date, status) => `${BASE_URL}/guest/countTotalGuest/${date}/${status}`
 
 };
 
