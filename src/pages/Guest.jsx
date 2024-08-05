@@ -52,7 +52,8 @@ const Guest = () => {
             }
 
             if (!response.ok) {
-                throw new Error('Terjadi kesalahan pada server, cobalah beberapa saat lagi');
+                const errorData = await response.json();
+                throw new Error(errorData.errorList);
             }
 
             const data = await response.json();
@@ -96,7 +97,8 @@ const Guest = () => {
             }
 
             if (!response.ok) {
-                throw new Error(`Terjadi kesalahan saat ${actionType === 'APPROVE' ? 'menyetujui' : 'menolak'} tamu, cobalah beberapa saat lagi`);
+                const errorData = await response.json();
+                throw new Error(`Terjadi kesalahan saat ${actionType === 'APPROVE' ? 'menyetujui' : 'menolak'} tamu, ${errorData.errorList}`);
             }
 
             setShowConfirmModal(false);

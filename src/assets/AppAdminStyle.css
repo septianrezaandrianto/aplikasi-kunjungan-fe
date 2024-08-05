@@ -96,6 +96,24 @@
   }
 
   
+  .admin-edit-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 77vh; /* Full viewport height minus some space for the header or footer */
+    background-color: #f0f2f5; /* Light background color */
+}
+
+.admin-edit-container {
+    max-width: 600px; /* Adjust width as needed */
+    width: 100%;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff; /* White background for the form */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
+}
+
 
 @media (max-width: 768px) {
     .AppSideMenu {
@@ -106,3 +124,4 @@
         width: 60px; /* Adjust for mobile view */
     }
 }
+
