@@ -30,6 +30,8 @@ const Login = () => {
       }
     } catch (error) {
       if (error.response) {
+        console.log('error', error)
+        console.log('error 2', response.data.errorList)
         const errorList = error.response.data.errorList;
         if (errorList && errorList.length > 0) {
           errorList.forEach((error) => {

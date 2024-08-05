@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { WebcamCapture } from './Webcam';
 import { DownOutlined } from '@ant-design/icons';
-import { Form, Input, Col, Row, Dropdown, Space, DatePicker, Button, Menu, message } from 'antd';
+import { Form, Input, Col, Row, Dropdown, Space, DatePicker, Button, Menu, message, Modal } from 'antd';
 import logo from '../../assets/img/logo.jpeg'; // Import the logo image
 import API_URLS from '../../configs/config.js';
 
@@ -29,6 +29,9 @@ const Home = () => {
     image: ''
   });
   const [resetWebcam, setResetWebcam] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [loading, setLoading] = useState(false); // New loading state
 
   // Fetch running number from the service
   useEffect(() => {
@@ -86,6 +89,7 @@ const Home = () => {
   };
 
   const handleSubmit = async (values) => {
+    setLoading(true); // Set loading state to true
     try {
       console.log('visitDateStart:', values.visitDate);
       const payload = {
@@ -105,8 +109,10 @@ const Home = () => {
       const response = await axios.post(API_URLS.CREATE_GUEST, payload);
 
       if (response.status === 200) {
-        message.success('Daftar kunjungan berhasil dibuat');
+        message.success('Daftar kunjungan berhasil dibuat!');
         console.log('Response:', response.data);
+        setModalMessage('Daftar kunjungan berhasil dibuat!');
+        setModalVisible(true);
         form.resetFields();
         setSelectedName('Pilih nama yang dituju'); // Reset the selected name
         setFormData({
@@ -124,26 +130,33 @@ const Home = () => {
           image: ''
         });
         setResetWebcam(true); // Trigger webcam reset
-
-        // Refresh the page
-        window.location.reload();
       } else {
         message.error(`Failed to create guest: ${response.data.errorList}`);
+        setModalMessage(`Failed to create guest: ${response.data.errorList}`);
+        setModalVisible(true);
       }
     } catch (error) {
       if (error.response) {
         // Server responded with a status other than 200 range
         message.error(`${error.response.data.errorList}`);
+        setModalMessage(`${error.response.data.errorList}`);
+        setModalVisible(true);
         console.error('Error:', error.response);
       } else if (error.request) {
         // Request was made but no response was received
         message.error('Gagal konek ke server');
+        setModalMessage('Gagal konek ke server');
+        setModalVisible(true);
         console.error('Error:', error.request);
       } else {
         // Something happened in setting up the request that triggered an error
-        message.error(`${error.response.data.errorList}`);
-        console.error('Error:', error.response.data.errorList);
+        message.error('Terjadi kesalahan, silakan coba lagi');
+        setModalMessage('Terjadi kesalahan, silakan coba lagi');
+        setModalVisible(true);
+        console.error('Error:', error.message);
       }
+    } finally {
+      setLoading(false); // Set loading state to false
     }
   };
 
@@ -159,6 +172,11 @@ const Home = () => {
       setResetWebcam(false);
     }
   }, [resetWebcam]);
+
+  const handleOk = () => {
+    setModalVisible(false);
+    window.location.reload(); // Refresh the page
+  };
 
   return (
     <>
@@ -294,7 +312,7 @@ const Home = () => {
         </Row>
         <Row gutter={[16, 16]} style={{ marginTop: '-30px', justifyContent: 'center' }}>
           <Col span={24} style={{ textAlign: 'center' }} >
-            <Button type="primary" htmlType="submit" style={{ width: '45%' }}>
+            <Button type="primary" htmlType="submit" style={{ width: '45%' }} loading={loading}> {/* Add loading attribute */}
               Kirim
             </Button>
             <Button style={{ marginLeft: '8px', width: '45%' }} onClick={() => {
@@ -311,7 +329,7 @@ const Home = () => {
                 visitDateEnd: '',
                 note: '',
                 adminId: '',
-                runningNumber: '',
+                runningNumber: runningNumber,
                 image: ''
               });
               setResetWebcam(true); // Trigger webcam reset
@@ -321,6 +339,20 @@ const Home = () => {
           </Col>
         </Row>
       </Form>
+
+      <Modal
+        title="Selamat!!!"
+        visible={modalVisible}
+        onOk={handleOk}
+        onCancel={handleOk}
+        footer={[
+          <Button key="ok" type="primary" onClick={handleOk}>
+            OK
+          </Button>
+        ]}
+      >
+        <p>{modalMessage}</p>
+      </Modal>
     </>
   );
 };
